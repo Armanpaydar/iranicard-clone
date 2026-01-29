@@ -58,18 +58,29 @@ const Services: React.FC = () => {
               <motion.div
                 key={service.id}
                 variants={cardVariants}
-                whileHover={{ y: -5 }}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-neutral-100"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all border border-neutral-100 cursor-pointer"
               >
-                <div className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="w-7 h-7 text-primary-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-2">
+                <motion.div
+                  className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-600 transition-colors"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon className="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" />
+                </motion.div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
                   {service.title}
                 </h3>
                 <p className="text-neutral-600 leading-relaxed">
                   {service.description}
                 </p>
+                <motion.div
+                  className="mt-4 text-primary-600 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                  initial={{ x: -10 }}
+                  whileHover={{ x: 0 }}
+                >
+                  بیشتر بدانید →
+                </motion.div>
               </motion.div>
             )
           })}

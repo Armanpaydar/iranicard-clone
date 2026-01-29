@@ -60,27 +60,59 @@ const HowItWorks: React.FC = () => {
               <motion.div
                 key={step.id}
                 variants={stepVariants}
-                className="relative"
+                className="relative group"
+                whileHover={{ y: -5 }}
               >
-                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow text-center">
-                  {/* Step Number */}
-                  <div className="relative z-10 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                    {step.number}
-                  </div>
+                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center relative overflow-hidden">
+                  {/* Decorative background */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  <div className="relative z-10">
+                    {/* Step Number */}
+                    <motion.div
+                      className="relative z-10 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold group-hover:scale-110 transition-transform"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      {step.number}
+                      <div className="absolute inset-0 bg-primary-400 rounded-full opacity-0 group-hover:opacity-50 animate-ping" />
+                    </motion.div>
 
-                  {/* Step Content */}
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-neutral-600 leading-relaxed">
-                    {step.description}
-                  </p>
+                    {/* Step Content */}
+                    <h3 className="text-xl font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
+                      {step.title}
+                    </h3>
+                    <p className="text-neutral-600 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Arrow (Mobile/Tablet) */}
                 {index < steps.length - 1 && (
-                  <div className="lg:hidden flex justify-center my-4">
+                  <motion.div
+                    className="lg:hidden flex justify-center my-4"
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + index * 0.2 }}
+                  >
                     <div className="w-0.5 h-8 bg-primary-300" />
+                  </motion.div>
+                )}
+
+                {/* Connector Arrow (Desktop) */}
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-24 left-1/2 w-full h-0.5">
+                    <motion.div
+                      className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary-400 rounded-full flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5 + index * 0.2 }}
+                    >
+                      <div className="w-0 h-0 border-l-4 border-l-primary-600 border-t-4 border-t-transparent border-b-4 border-b-transparent" />
+                    </motion.div>
                   </div>
                 )}
               </motion.div>

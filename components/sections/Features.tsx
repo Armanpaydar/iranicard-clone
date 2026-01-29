@@ -52,24 +52,33 @@ const Features: React.FC = () => {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {features.map((feature) => {
+          {features.map((feature, index) => {
             const Icon = feature.icon
             return (
               <motion.div
                 key={feature.id}
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all"
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="group bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all relative overflow-hidden"
               >
-                <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-white" />
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="relative z-10">
+                  <motion.div
+                    className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Icon className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-neutral-600 leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-neutral-600 leading-relaxed">
-                  {feature.description}
-                </p>
               </motion.div>
             )
           })}
