@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
@@ -24,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'px-8 py-4 text-lg',
     }
     
-    const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`
+    const classes = cn(baseStyles, variants[variant], sizes[size], className)
     
     return (
       <motion.button
