@@ -5,10 +5,18 @@ import { motion } from 'framer-motion'
 import Container from '../ui/Container'
 import Accordion from '../ui/Accordion'
 import { faqData } from '@/data/faq'
+import { getFAQSchema } from '@/lib/structured-data'
 
 const FAQ: React.FC = () => {
+  const faqSchema = getFAQSchema(faqData)
+
   return (
-    <section id="faq" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-neutral-50 to-white">
+    <section id="faq" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-neutral-50 to-white" aria-labelledby="faq-heading">
+      {/* Structured Data for FAQ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -26,7 +34,7 @@ const FAQ: React.FC = () => {
           >
             <div className="w-16 h-1 bg-primary-600 rounded-full mx-auto" />
           </motion.div>
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+          <h2 id="faq-heading" className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
             سوالات متداول
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">

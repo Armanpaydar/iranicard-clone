@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
   }
 
   return (
-    <section id="home" className="relative pt-24 sm:pt-32 pb-16 sm:pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden">
+    <section id="home" className="relative pt-24 sm:pt-32 pb-16 sm:pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden" aria-labelledby="hero-heading">
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -95,6 +95,7 @@ const Hero: React.FC = () => {
             </motion.div>
 
             <motion.h1
+              id="hero-heading"
               variants={itemVariants}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 leading-tight"
             >

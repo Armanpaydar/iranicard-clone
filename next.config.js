@@ -33,6 +33,14 @@ const nextConfig = {
   },
   // Enable static optimization
   output: 'standalone',
+  // Compression
+  compress: true,
+  // Optimize production builds
+  swcMinify: true,
+  // Reduce bundle size
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 }
 
 module.exports = nextConfig

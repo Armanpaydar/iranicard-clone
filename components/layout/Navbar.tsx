@@ -87,20 +87,21 @@ const Navbar: React.FC = () => {
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-reverse space-x-6 xl:space-x-8">
+            <nav className="hidden lg:flex items-center space-x-reverse space-x-6 xl:space-x-8" role="navigation" aria-label="منوی اصلی">
               {navLinks.map((link) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
                   className={cn(
-                    'relative font-medium text-sm transition-all duration-200 px-2 py-1 rounded-md',
+                    'relative font-medium text-sm transition-all duration-200 px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                     activeSection === link.id
                       ? 'text-primary-600 bg-primary-50'
                       : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
                   )}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-current={activeSection === link.id ? 'page' : undefined}
                 >
                   {link.name}
                   {activeSection === link.id && (
@@ -113,6 +114,8 @@ const Navbar: React.FC = () => {
                   )}
                 </motion.a>
               ))}
+            </nav>
+            <div className="hidden lg:block">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}

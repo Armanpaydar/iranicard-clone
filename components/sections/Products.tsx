@@ -49,7 +49,8 @@ const ProductImage: React.FC<{
           sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
           onError={handleImageError}
           onLoad={handleImageLoad}
-          priority={false}
+          loading="lazy"
+          decoding="async"
           loading="lazy"
         />
       ) : (
@@ -69,7 +70,7 @@ const ProductImage: React.FC<{
 
 const Products: React.FC = () => {
   return (
-    <section id="products" className="py-16 sm:py-20 md:py-24 bg-white">
+    <section id="products" className="py-16 sm:py-20 md:py-24 bg-white" aria-labelledby="products-heading">
       <Container>
         {/* Section Header */}
         <motion.div
@@ -79,7 +80,7 @@ const Products: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+          <h2 id="products-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
             محصولات و گیفت کارت‌ها
           </h2>
           <p className="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
@@ -90,7 +91,7 @@ const Products: React.FC = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {products.slice(0, 8).map((product, index) => (
-            <motion.div
+            <motion.article
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -98,9 +99,16 @@ const Products: React.FC = () => {
               transition={{ duration: 0.4, delay: index * 0.1 }}
               whileHover={{ y: -4 }}
               className="group cursor-pointer"
+              role="article"
+              aria-label={`محصول ${product.title}`}
             >
               {/* Product Card */}
-              <div className={`relative bg-gradient-to-br ${product.gradient} rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 min-h-[180px] sm:min-h-[200px] md:min-h-[220px] lg:min-h-[240px] flex flex-col justify-between overflow-hidden shadow-md hover:shadow-xl transition-all duration-300`}>
+              <div 
+                className={`relative bg-gradient-to-br ${product.gradient} rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 min-h-[180px] sm:min-h-[200px] md:min-h-[220px] lg:min-h-[240px] flex flex-col justify-between overflow-hidden shadow-md hover:shadow-xl transition-all duration-300`}
+                role="button"
+                tabIndex={0}
+                aria-label={`مشاهده جزئیات ${product.title}`}
+              >
                 {/* Decorative Sparkles (for premium products) */}
                 {(product.id === '2' || product.id === '8') && (
                   <div className="absolute inset-0 opacity-20">
@@ -203,7 +211,7 @@ const Products: React.FC = () => {
                   </div>
                 )}
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </Container>
