@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
     <footer className="bg-neutral-900 text-neutral-300">
       <Container>
         <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12">
             {/* Brand Column */}
             <div className="lg:col-span-2">
               <h3 className="text-2xl font-bold text-white mb-4">ایرانی کارت</h3>
@@ -66,13 +66,13 @@ const Footer: React.FC = () => {
               {/* Newsletter Signup */}
               <div className="mb-6">
                 <h4 className="text-white font-semibold mb-3">عضویت در خبرنامه</h4>
-                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="ایمیل خود را وارد کنید"
-                    className="flex-1 px-4 py-2 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-neutral-800 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     required
                   />
                   <Button

@@ -8,7 +8,7 @@ import { faqData } from '@/data/faq'
 
 const FAQ: React.FC = () => {
   return (
-    <section id="faq" className="py-12 sm:py-16 md:py-20 bg-white">
+    <section id="faq" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-neutral-50 to-white">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -17,6 +17,15 @@ const FAQ: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            className="inline-block mb-4"
+          >
+            <div className="w-16 h-1 bg-primary-600 rounded-full mx-auto" />
+          </motion.div>
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
             سوالات متداول
           </h2>

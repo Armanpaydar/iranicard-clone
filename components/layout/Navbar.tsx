@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
       setIsScrolled(window.scrollY > 20)
       
       // Active section detection
-      const sections = ['home', 'services', 'features', 'how-it-works', 'testimonials', 'faq']
+      const sections = ['home', 'products', 'services', 'features', 'how-it-works', 'testimonials', 'faq']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -55,6 +55,7 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'خانه', href: '#home', id: 'home' },
+    { name: 'محصولات', href: '#products', id: 'products' },
     { name: 'خدمات', href: '#services', id: 'services' },
     { name: 'ویژگی‌ها', href: '#features', id: 'features' },
     { name: 'نحوه کار', href: '#how-it-works', id: 'how-it-works' },
@@ -74,11 +75,11 @@ const Navbar: React.FC = () => {
         }`}
       >
         <Container>
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <motion.a
               href="#home"
-              className="text-2xl font-bold text-primary-600"
+              className="text-xl sm:text-2xl font-bold text-primary-600"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -86,43 +87,50 @@ const Navbar: React.FC = () => {
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-reverse space-x-8">
+            <div className="hidden lg:flex items-center space-x-reverse space-x-6 xl:space-x-8">
               {navLinks.map((link) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
                   className={cn(
-                    'relative font-medium text-sm transition-colors',
+                    'relative font-medium text-sm transition-all duration-200 px-2 py-1 rounded-md',
                     activeSection === link.id
-                      ? 'text-primary-600'
-                      : 'text-neutral-700 hover:text-primary-600'
+                      ? 'text-primary-600 bg-primary-50'
+                      : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
                   )}
                   whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {link.name}
                   {activeSection === link.id && (
                     <motion.span
                       layoutId="activeSection"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-600"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-600 rounded-full"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                 </motion.a>
               ))}
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => {
-                  const element = document.getElementById('home')
-                  if (element) {
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }
-                }}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
               >
-                ورود / ثبت نام
-              </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => {
+                    const element = document.getElementById('home')
+                    if (element) {
+                      window.scrollTo({ top: 0, behavior: 'smooth' })
+                    }
+                  }}
+                >
+                  ورود / ثبت نام
+                </Button>
+              </motion.div>
             </div>
 
             {/* Mobile Menu Button */}

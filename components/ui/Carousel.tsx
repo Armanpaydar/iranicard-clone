@@ -24,6 +24,8 @@ function Carousel<T extends CarouselItem>({
   autoPlayInterval = 5000,
 }: CarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   useEffect(() => {
     if (!autoPlay || items.length <= 1) return
@@ -34,6 +36,28 @@ function Carousel<T extends CarouselItem>({
 
     return () => clearInterval(interval)
   }, [autoPlay, autoPlayInterval, items.length])
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      goToNext()
+    }
+    if (isRightSwipe) {
+      goToPrevious()
+    }
+  }
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length)
@@ -52,14 +76,19 @@ function Carousel<T extends CarouselItem>({
   return (
     <div className="relative">
       {/* Carousel Container */}
-      <div className="relative overflow-hidden rounded-xl">
+      <div 
+        className="relative overflow-hidden rounded-xl"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, x: 100, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -100, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
           >
             {renderItem(items[currentIndex])}
           </motion.div>
@@ -69,20 +98,24 @@ function Carousel<T extends CarouselItem>({
       {/* Navigation Arrows */}
       {items.length > 1 && (
         <>
-          <button
+          <motion.button
             onClick={goToPrevious}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors z-10"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors z-10 group"
             aria-label="Previous"
+            whileHover={{ scale: 1.1, x: -4 }}
+            whileTap={{ scale: 0.9 }}
           >
-            <HiChevronRight className="w-6 h-6" />
-          </button>
-          <button
+            <HiChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+          <motion.button
             onClick={goToNext}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors z-10"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors z-10 group"
             aria-label="Next"
+            whileHover={{ scale: 1.1, x: 4 }}
+            whileTap={{ scale: 0.9 }}
           >
-            <HiChevronLeft className="w-6 h-6" />
-          </button>
+            <HiChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-1 transition-transform" />
+          </motion.button>
         </>
       )}
 
@@ -90,15 +123,21 @@ function Carousel<T extends CarouselItem>({
       {items.length > 1 && (
         <div className="flex justify-center mt-6 space-x-reverse space-x-2">
           {items.map((_, index) => (
-            <button
+            <motion.button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
+              className={`h-2 rounded-full transition-all ${
                 index === currentIndex
                   ? 'bg-primary-600 w-8'
-                  : 'bg-neutral-300 hover:bg-neutral-400'
+                  : 'bg-neutral-300 hover:bg-neutral-400 w-2'
               }`}
               aria-label={`Go to slide ${index + 1}`}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{
+                width: index === currentIndex ? 32 : 8,
+              }}
+              transition={{ duration: 0.2 }}
             />
           ))}
         </div>

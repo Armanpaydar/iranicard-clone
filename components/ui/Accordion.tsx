@@ -18,35 +18,52 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   onToggle,
 }) => {
   return (
-    <div className="border border-neutral-200 rounded-lg overflow-hidden mb-4">
-      <button
+    <motion.div
+      className="border border-neutral-200 rounded-lg overflow-hidden mb-4 shadow-sm hover:shadow-md transition-shadow"
+      whileHover={{ scale: 1.01 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <motion.button
         onClick={onToggle}
-        className="w-full px-6 py-4 flex items-center justify-between text-right bg-white hover:bg-neutral-50 transition-colors"
+        className="w-full px-4 sm:px-5 md:px-6 py-3 sm:py-4 flex items-center justify-between text-right bg-white hover:bg-primary-50 transition-colors group"
+        whileHover={{ x: -4 }}
+        whileTap={{ scale: 0.98 }}
       >
-        <span className="text-lg font-semibold text-neutral-900">{question}</span>
+        <span className={`text-base sm:text-lg font-semibold transition-colors pr-2 ${isOpen ? 'text-primary-600' : 'text-neutral-900 group-hover:text-primary-600'}`}>
+          {question}
+        </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, type: 'spring', stiffness: 300, damping: 30 }}
+          className={`p-1 rounded-full transition-colors ${isOpen ? 'bg-primary-100' : 'bg-neutral-100 group-hover:bg-primary-100'}`}
         >
-          <HiChevronDown className="w-5 h-5 text-neutral-600" />
+          <HiChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-primary-600' : 'text-neutral-600'}`} />
         </motion.div>
-      </button>
+      </motion.button>
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-6 py-4 bg-neutral-50 text-neutral-700 leading-relaxed">
+            <motion.div
+              initial={{ y: -10 }}
+              animate={{ y: 0 }}
+              exit={{ y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="px-4 sm:px-5 md:px-6 py-3 sm:py-4 bg-gradient-to-br from-neutral-50 to-primary-50 text-neutral-700 leading-relaxed text-sm sm:text-base"
+            >
               {answer}
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }
 
@@ -62,15 +79,22 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
   }
 
   return (
-    <div>
-      {items.map((item) => (
-        <AccordionItem
+    <div className="space-y-4">
+      {items.map((item, index) => (
+        <motion.div
           key={item.id}
-          question={item.question}
-          answer={item.answer}
-          isOpen={openIndex === item.id}
-          onToggle={() => handleToggle(item.id)}
-        />
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ delay: index * 0.1, duration: 0.3 }}
+        >
+          <AccordionItem
+            question={item.question}
+            answer={item.answer}
+            isOpen={openIndex === item.id}
+            onToggle={() => handleToggle(item.id)}
+          />
+        </motion.div>
       ))}
     </div>
   )

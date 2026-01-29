@@ -39,7 +39,7 @@ const Stats: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.id}
@@ -50,7 +50,7 @@ const Stats: React.FC = () => {
               className="text-center"
             >
               <motion.div
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2"
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}

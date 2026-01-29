@@ -1,0 +1,23 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="premiumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+    </linearGradient>
+    <filter id="sparkle">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" fill="url(#premiumGrad)" rx="12"/>
+  <!-- Sparkle effects -->
+  <circle cx="50" cy="40" r="2" fill="white" opacity="0.8"/>
+  <circle cx="150" cy="50" r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="40" cy="120" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="160" cy="130" r="2" fill="white" opacity="0.8"/>
+  <circle cx="80" cy="160" r="1" fill="white" opacity="0.9"/>
+  <circle cx="120" cy="30" r="1" fill="white" opacity="0.8"/>
+  <!-- Star -->
+  <path d="M 100 60 L 108 90 L 138 90 L 114 108 L 122 138 L 100 120 L 78 138 L 86 108 L 62 90 L 92 90 Z" fill="white" opacity="0.95"/>
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Telegram Premium</text>
+</svg>

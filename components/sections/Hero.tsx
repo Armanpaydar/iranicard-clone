@@ -146,7 +146,7 @@ const Hero: React.FC = () => {
             {/* Stats */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
+              className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-2xl mx-auto px-4"
             >
               {[
                 { number: '1M+', label: 'کاربر فعال' },
@@ -160,10 +160,10 @@ const Hero: React.FC = () => {
                   transition={{ delay: 0.8 + index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-2xl md:text-3xl font-bold text-primary-600 mb-1">
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary-600 mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-neutral-600">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-neutral-600">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>

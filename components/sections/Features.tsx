@@ -50,7 +50,7 @@ const Features: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
         >
           {features.map((feature, index) => {
             const Icon = feature.icon
@@ -59,7 +59,8 @@ const Features: React.FC = () => {
                 key={feature.id}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="group bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all relative overflow-hidden"
+                whileTap={{ scale: 0.98 }}
+                className="group bg-white p-4 sm:p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all relative overflow-hidden cursor-pointer"
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

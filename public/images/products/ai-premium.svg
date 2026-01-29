@@ -1,0 +1,19 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#aiGrad)" rx="12"/>
+  <!-- Smartphone -->
+  <rect x="50" y="80" width="60" height="100" rx="8" fill="#1f2937" opacity="0.9"/>
+  <rect x="55" y="90" width="50" height="80" rx="4" fill="#111827"/>
+  <!-- Robot emerging from phone -->
+  <circle cx="80" cy="70" r="15" fill="white" opacity="0.95"/>
+  <circle cx="75" cy="68" r="3" fill="#3b82f6"/>
+  <circle cx="85" cy="68" r="3" fill="#3b82f6"/>
+  <path d="M 70 75 Q 80 80 90 75" stroke="#3b82f6" stroke-width="2" fill="none"/>
+  <rect x="70" y="85" width="20" height="15" rx="2" fill="white" opacity="0.9"/>
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">اشتراک هوش مصنوعی</text>
+</svg>

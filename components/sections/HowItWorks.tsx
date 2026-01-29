@@ -55,7 +55,7 @@ const HowItWorks: React.FC = () => {
           {/* Connection Line (Desktop) */}
           <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-l from-primary-200 via-primary-400 to-primary-200" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4 xl:gap-6">
             {steps.map((step, index) => (
               <motion.div
                 key={step.id}
@@ -63,19 +63,30 @@ const HowItWorks: React.FC = () => {
                 className="relative group"
                 whileHover={{ y: -5 }}
               >
-                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center relative overflow-hidden">
+                <div className="bg-white p-4 sm:p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center relative overflow-hidden">
                   {/* Decorative background */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="relative z-10">
                     {/* Step Number */}
                     <motion.div
-                      className="relative z-10 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold group-hover:scale-110 transition-transform"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
+                      className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white text-xl sm:text-2xl font-bold"
+                      whileHover={{ scale: 1.15, rotate: 360 }}
+                      transition={{ duration: 0.6, type: 'spring', stiffness: 200 }}
                     >
                       {step.number}
-                      <div className="absolute inset-0 bg-primary-400 rounded-full opacity-0 group-hover:opacity-50 animate-ping" />
+                      <motion.div
+                        className="absolute inset-0 bg-primary-400 rounded-full"
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.5, 0, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                        }}
+                      />
                     </motion.div>
 
                     {/* Step Content */}

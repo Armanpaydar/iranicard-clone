@@ -42,10 +42,10 @@ const CTA: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
                 آماده شروع هستید؟
               </h2>
-              <p className="text-lg text-primary-100 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg text-primary-100 mb-6 sm:mb-8 leading-relaxed">
                 همین حالا به خانواده بزرگ ایرانی کارت بپیوندید و از تمامی
                 امکانات و خدمات ما بهره‌مند شوید
               </p>

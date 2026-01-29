@@ -74,10 +74,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ links, onClose, activeSection }
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
                     className={cn(
-                      'block py-3 transition-colors font-medium text-lg',
+                      'block py-3 px-4 rounded-lg transition-all duration-200 font-medium text-lg',
                       activeSection === link.id
-                        ? 'text-primary-600 border-r-2 border-primary-600 pr-4'
-                        : 'text-neutral-700 hover:text-primary-600'
+                        ? 'text-primary-600 bg-primary-50 border-r-2 border-primary-600'
+                        : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50'
                     )}
                   >
                     {link.name}
