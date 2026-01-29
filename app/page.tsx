@@ -1,4 +1,6 @@
-import { Navbar, Footer } from '@/components/layout'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import ScrollToTop from '@/components/layout/ScrollToTop'
 import Hero from '@/components/sections/Hero'
 import Services from '@/components/sections/Services'
 import Features from '@/components/sections/Features'
@@ -19,6 +21,7 @@ export default function Home() {
         <FAQ />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   )
 }

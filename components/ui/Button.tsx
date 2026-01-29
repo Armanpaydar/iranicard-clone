@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -33,7 +35,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={classes}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        {...props}
+        {...(props as any)}
       >
         {children}
       </motion.button>

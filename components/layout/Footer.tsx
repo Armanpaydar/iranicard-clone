@@ -1,9 +1,26 @@
-import React from 'react'
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
+'use client'
+
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
 import Container from '../ui/Container'
+import Button from '../ui/Button'
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setEmail('')
+      alert('با موفقیت ثبت شد!')
+    }, 1000)
+  }
 
   const footerLinks = {
     services: [
@@ -45,15 +62,49 @@ const Footer: React.FC = () => {
                 پلتفرم پیشرو در ارائه راهکارهای پرداخت الکترونیک و خدمات مالی
                 با بیش از یک دهه تجربه در زمینه فناوری‌های مالی
               </p>
+              
+              {/* Newsletter Signup */}
+              <div className="mb-6">
+                <h4 className="text-white font-semibold mb-3">عضویت در خبرنامه</h4>
+                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="ایمیل خود را وارد کنید"
+                    className="flex-1 px-4 py-2 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    required
+                  />
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="sm"
+                    disabled={isSubmitting}
+                    className="flex items-center gap-2"
+                  >
+                    <FaPaperPlane className="w-4 h-4" />
+                    {isSubmitting ? 'در حال ارسال...' : 'ارسال'}
+                  </Button>
+                </form>
+              </div>
+
               <div className="space-y-3">
-                <div className="flex items-center space-x-reverse space-x-3">
+                <motion.a
+                  href="tel:02112345678"
+                  className="flex items-center space-x-reverse space-x-3 text-neutral-300 hover:text-primary-400 transition-colors"
+                  whileHover={{ x: -4 }}
+                >
                   <FaPhone className="text-primary-500" />
                   <span>021-12345678</span>
-                </div>
-                <div className="flex items-center space-x-reverse space-x-3">
+                </motion.a>
+                <motion.a
+                  href="mailto:info@iranicard.ir"
+                  className="flex items-center space-x-reverse space-x-3 text-neutral-300 hover:text-primary-400 transition-colors"
+                  whileHover={{ x: -4 }}
+                >
                   <FaEnvelope className="text-primary-500" />
                   <span>info@iranicard.ir</span>
-                </div>
+                </motion.a>
                 <div className="flex items-center space-x-reverse space-x-3">
                   <FaMapMarkerAlt className="text-primary-500" />
                   <span>تهران، خیابان ولیعصر</span>
@@ -120,14 +171,18 @@ const Footer: React.FC = () => {
                 {socialLinks.map((social) => {
                   const Icon = social.icon
                   return (
-                    <a
+                    <motion.a
                       key={social.label}
                       href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="w-10 h-10 flex items-center justify-center rounded-full bg-neutral-800 hover:bg-primary-600 transition-colors"
                       aria-label={social.label}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <Icon className="w-5 h-5" />
-                    </a>
+                    </motion.a>
                   )
                 })}
               </div>

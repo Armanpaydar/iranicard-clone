@@ -3,14 +3,30 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { HiX } from 'react-icons/hi'
+import { cn } from '@/lib/utils'
 import Button from '../ui/Button'
 
 interface MobileMenuProps {
-  links: Array<{ name: string; href: string }>
+  links: Array<{ name: string; href: string; id: string }>
   onClose: () => void
+  activeSection?: string
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ links, onClose }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({ links, onClose, activeSection }) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const targetId = href.replace('#', '')
+    const element = document.getElementById(targetId)
+    
+    if (element) {
+      const offsetTop = element.offsetTop - 80
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth',
+      })
+      onClose()
+    }
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -56,8 +72,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ links, onClose }) => {
                 >
                   <a
                     href={link.href}
-                    onClick={onClose}
-                    className="block py-3 text-neutral-700 hover:text-primary-600 transition-colors font-medium text-lg"
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className={cn(
+                      'block py-3 transition-colors font-medium text-lg',
+                      activeSection === link.id
+                        ? 'text-primary-600 border-r-2 border-primary-600 pr-4'
+                        : 'text-neutral-700 hover:text-primary-600'
+                    )}
                   >
                     {link.name}
                   </a>

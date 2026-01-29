@@ -3,28 +3,63 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
+import { cn } from '@/lib/utils'
 import Container from '../ui/Container'
 import MobileMenu from './MobileMenu'
+import Button from '../ui/Button'
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
+      
+      // Active section detection
+      const sections = ['home', 'services', 'features', 'how-it-works', 'testimonials', 'faq']
+      const scrollPosition = window.scrollY + 100
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
     }
+
     window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial check
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const targetId = href.replace('#', '')
+    const element = document.getElementById(targetId)
+    
+    if (element) {
+      const offsetTop = element.offsetTop - 80 // Account for navbar height
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth',
+      })
+      setIsMobileMenuOpen(false)
+    }
+  }
+
   const navLinks = [
-    { name: 'خانه', href: '#home' },
-    { name: 'خدمات', href: '#services' },
-    { name: 'ویژگی‌ها', href: '#features' },
-    { name: 'نحوه کار', href: '#how-it-works' },
-    { name: 'سوالات متداول', href: '#faq' },
-    { name: 'تماس با ما', href: '#contact' },
+    { name: 'خانه', href: '#home', id: 'home' },
+    { name: 'خدمات', href: '#services', id: 'services' },
+    { name: 'ویژگی‌ها', href: '#features', id: 'features' },
+    { name: 'نحوه کار', href: '#how-it-works', id: 'how-it-works' },
+    { name: 'نظرات', href: '#testimonials', id: 'testimonials' },
+    { name: 'سوالات متداول', href: '#faq', id: 'faq' },
   ]
 
   return (
@@ -56,33 +91,71 @@ const Navbar: React.FC = () => {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  className="text-neutral-700 hover:text-primary-600 transition-colors font-medium text-sm"
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className={cn(
+                    'relative font-medium text-sm transition-colors',
+                    activeSection === link.id
+                      ? 'text-primary-600'
+                      : 'text-neutral-700 hover:text-primary-600'
+                  )}
                   whileHover={{ y: -2 }}
                 >
                   {link.name}
+                  {activeSection === link.id && (
+                    <motion.span
+                      layoutId="activeSection"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-600"
+                      initial={false}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </motion.a>
               ))}
-              <motion.button
-                className="bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors text-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  const element = document.getElementById('home')
+                  if (element) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }
+                }}
               >
                 ورود / ثبت نام
-              </motion.button>
+              </Button>
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-neutral-700"
+            <motion.button
+              className="lg:hidden p-2 text-neutral-700 hover:text-primary-600 transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
+              whileTap={{ scale: 0.95 }}
             >
-              {isMobileMenuOpen ? (
-                <HiX className="w-6 h-6" />
-              ) : (
-                <HiMenu className="w-6 h-6" />
-              )}
-            </button>
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <HiX className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <HiMenu className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </div>
         </Container>
       </motion.nav>
@@ -93,6 +166,7 @@ const Navbar: React.FC = () => {
           <MobileMenu
             links={navLinks}
             onClose={() => setIsMobileMenuOpen(false)}
+            activeSection={activeSection}
           />
         )}
       </AnimatePresence>

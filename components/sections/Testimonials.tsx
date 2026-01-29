@@ -16,7 +16,7 @@ const Testimonials: React.FC = () => {
         ))}
       </div>
       <blockquote className="text-lg md:text-xl text-neutral-700 mb-6 leading-relaxed text-center">
-        "{testimonial.content}"
+        &ldquo;{testimonial.content}&rdquo;
       </blockquote>
       <div className="text-center">
         <p className="font-semibold text-neutral-900 text-lg">
