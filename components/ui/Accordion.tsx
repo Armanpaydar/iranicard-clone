@@ -19,27 +19,26 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 }) => {
   return (
     <motion.div
-      className="border border-neutral-200 rounded-lg overflow-hidden mb-4 shadow-sm hover:shadow-md transition-shadow"
-      whileHover={{ scale: 1.01 }}
+      className="border border-neutral-200/80 rounded-xl overflow-hidden mb-4 shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+      whileHover={{ y: -2 }}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
     >
       <motion.button
         onClick={onToggle}
-        className="w-full px-4 sm:px-5 md:px-6 py-3 sm:py-4 flex items-center justify-between text-right bg-white hover:bg-primary-50 transition-colors group"
-        whileHover={{ x: -4 }}
+        className="w-full px-5 sm:px-6 md:px-8 py-4 sm:py-5 flex items-center justify-between text-right bg-white hover:bg-primary-50/50 transition-colors duration-300 group"
         whileTap={{ scale: 0.98 }}
       >
-        <span className={`text-base sm:text-lg font-semibold transition-colors pr-2 ${isOpen ? 'text-primary-600' : 'text-neutral-900 group-hover:text-primary-600'}`}>
+        <span className={`text-lg sm:text-xl font-bold transition-colors pr-3 ${isOpen ? 'text-primary-600' : 'text-neutral-900 group-hover:text-primary-700'}`}>
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, type: 'spring', stiffness: 300, damping: 30 }}
-          className={`p-1 rounded-full transition-colors ${isOpen ? 'bg-primary-100' : 'bg-neutral-100 group-hover:bg-primary-100'}`}
+          className={`p-2 rounded-lg transition-colors duration-300 ${isOpen ? 'bg-primary-100' : 'bg-neutral-100 group-hover:bg-primary-100'}`}
         >
-          <HiChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-primary-600' : 'text-neutral-600'}`} />
+          <HiChevronDown className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${isOpen ? 'text-primary-600' : 'text-neutral-600'}`} />
         </motion.div>
       </motion.button>
       <AnimatePresence>
@@ -56,7 +55,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
               animate={{ y: 0 }}
               exit={{ y: -10 }}
               transition={{ duration: 0.2 }}
-              className="px-4 sm:px-5 md:px-6 py-3 sm:py-4 bg-gradient-to-br from-neutral-50 to-primary-50 text-neutral-700 leading-relaxed text-sm sm:text-base"
+              className="px-5 sm:px-6 md:px-8 py-4 sm:py-5 bg-gradient-to-br from-neutral-50/50 to-primary-50/30 text-neutral-700 leading-relaxed text-base"
             >
               {answer}
             </motion.div>

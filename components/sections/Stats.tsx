@@ -22,19 +22,19 @@ const stats: Stat[] = [
 const Stats: React.FC = () => {
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+    <section className="py-20 sm:py-24 md:py-32 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-16 sm:mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
             آمار و ارقام ما
           </h2>
-          <p className="text-lg text-primary-100 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-primary-100 max-w-3xl mx-auto leading-relaxed">
             اعداد و ارقامی که نشان‌دهنده اعتماد و رضایت مشتریان ماست
           </p>
         </motion.div>

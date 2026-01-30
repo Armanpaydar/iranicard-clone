@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
   }
 
   return (
-    <section id="home" className="relative pt-24 sm:pt-32 pb-16 sm:pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden" aria-labelledby="hero-heading">
+    <section id="home" className="relative pt-28 sm:pt-36 md:pt-40 pb-20 sm:pb-24 md:pb-32 bg-gradient-to-br from-primary-50/50 via-white to-secondary-50/30 overflow-hidden" aria-labelledby="hero-heading">
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
             <motion.h1
               id="hero-heading"
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-900 mb-8 leading-[1.1] tracking-tight"
             >
               راهکارهای پرداخت هوشمند
               <br />
@@ -125,7 +125,7 @@ const Hero: React.FC = () => {
             
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg md:text-xl text-neutral-600 mb-8 leading-relaxed max-w-2xl mx-auto px-4"
+              className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-12 leading-relaxed max-w-3xl mx-auto px-4 font-normal"
             >
               پلتفرم پیشرو در ارائه راهکارهای پرداخت الکترونیک و خدمات مالی
               با امنیت بالا و سرعت بی‌نظیر
@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-16"
             >
               <Button size="lg" className="group flex items-center" onClick={handleGetStarted}>
                 شروع کنید

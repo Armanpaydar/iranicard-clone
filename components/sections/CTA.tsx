@@ -23,7 +23,7 @@ const CTA: React.FC = () => {
   ]
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 text-white relative overflow-hidden">
+    <section className="py-20 sm:py-24 md:py-32 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -42,10 +42,10 @@ const CTA: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 آماده شروع هستید؟
               </h2>
-              <p className="text-base sm:text-lg text-primary-100 mb-6 sm:mb-8 leading-relaxed">
+              <p className="text-lg sm:text-xl text-primary-100 mb-10 leading-relaxed">
                 همین حالا به خانواده بزرگ ایرانی کارت بپیوندید و از تمامی
                 امکانات و خدمات ما بهره‌مند شوید
               </p>
@@ -76,16 +76,16 @@ const CTA: React.FC = () => {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="group flex items-center justify-center"
+                  className="group flex items-center justify-center shadow-xl shadow-secondary-600/30"
                   onClick={handleGetStarted}
                 >
                   شروع رایگان
-                  <FaArrowLeft className="mr-2 group-hover:translate-x-1 transition-transform" />
+                  <FaArrowLeft className="mr-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                  className="bg-white/10 border-2 border-white/40 text-white hover:bg-white/20 hover:border-white/60 backdrop-blur-sm"
                 >
                   تماس با ما
                 </Button>

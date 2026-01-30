@@ -46,7 +46,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-vazir)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-vazirmatn)', 'system-ui', 'sans-serif'],
       },
       spacing: {
         '18': '4.5rem',

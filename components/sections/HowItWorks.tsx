@@ -28,19 +28,19 @@ const HowItWorks: React.FC = () => {
   }
 
   return (
-    <section id="how-it-works" className="py-12 sm:py-16 md:py-20 bg-white">
+    <section id="how-it-works" className="py-20 sm:py-24 md:py-32 bg-white">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-16 sm:mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
             نحوه کار
           </h2>
-          <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             در ۴ قدم ساده شروع به استفاده از خدمات ما کنید
           </p>
         </motion.div>
@@ -63,7 +63,7 @@ const HowItWorks: React.FC = () => {
                 className="relative group"
                 whileHover={{ y: -5 }}
               >
-                <div className="bg-white p-4 sm:p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center relative overflow-hidden">
+                <div className="bg-white p-6 sm:p-7 md:p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 text-center relative overflow-hidden border border-neutral-200/80">
                   {/* Decorative background */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity" />
                   

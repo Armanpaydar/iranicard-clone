@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { HiChevronRight, HiChevronLeft } from 'react-icons/hi'
 import Container from '../ui/Container'
 import { products } from '@/data/products'
 
@@ -21,10 +22,8 @@ const ProductImage: React.FC<{
   const handleImageError = () => {
     if (!hasError) {
       setHasError(true)
-      // Try placeholder service as fallback
-      const placeholderText = encodeURIComponent(fallbackText.substring(0, 15))
-      setImgSrc(`https://via.placeholder.com/200x200/0284c7/ffffff?text=${placeholderText}`)
       setIsLoading(false)
+      // Don't try external placeholder, just show fallback UI
     }
   }
 
@@ -32,8 +31,11 @@ const ProductImage: React.FC<{
     setIsLoading(false)
   }
 
+  // Check if it's an SVG file
+  const isSVG = imgSrc.toLowerCase().endsWith('.svg')
+
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full flex items-center justify-center">
       {isLoading && !hasError && (
         <div className="absolute inset-0 bg-white/10 rounded-lg animate-pulse flex items-center justify-center">
           <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -45,22 +47,23 @@ const ProductImage: React.FC<{
           src={imgSrc}
           alt={alt}
           fill
-          className={`object-contain drop-shadow-lg transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-          sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
+          className={`object-contain drop-shadow-2xl transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} filter brightness-110 group-hover:brightness-125`}
+          sizes="128px"
           onError={handleImageError}
           onLoad={handleImageLoad}
           loading="lazy"
           decoding="async"
-          loading="lazy"
+          unoptimized={isSVG || imgSrc.startsWith('http')}
+          priority={false}
         />
       ) : (
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full h-full flex items-center justify-center bg-white/20 rounded-lg backdrop-blur-sm"
+          className="w-full h-full flex items-center justify-center bg-white/20 rounded-lg backdrop-blur-sm border border-white/30"
         >
-          <div className="text-white text-xs font-bold text-center px-2">
-            {fallbackText.substring(0, 12)}
+          <div className="text-black text-xs sm:text-sm font-bold text-center px-2 break-words">
+            {fallbackText.substring(0, 15)}
           </div>
         </motion.div>
       )}
@@ -69,8 +72,30 @@ const ProductImage: React.FC<{
 }
 
 const Products: React.FC = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      // In RTL, scroll left means moving content to the right visually
+      scrollContainerRef.current.scrollBy({
+        left: 320,
+        behavior: 'smooth',
+      })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      // In RTL, scroll right means moving content to the left visually
+      scrollContainerRef.current.scrollBy({
+        left: -320,
+        behavior: 'smooth',
+      })
+    }
+  }
+
   return (
-    <section id="products" className="py-16 sm:py-20 md:py-24 bg-white" aria-labelledby="products-heading">
+    <section id="products" className="py-20 sm:py-24 md:py-32 bg-white" aria-labelledby="products-heading">
       <Container>
         {/* Section Header */}
         <motion.div
@@ -78,141 +103,159 @@ const Products: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-16 sm:mb-20"
         >
-          <h2 id="products-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+          <h2 id="products-heading" className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
             محصولات و گیفت کارت‌ها
           </h2>
-          <p className="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             خرید و فروش انواع گیفت کارت و اشتراک‌های دیجیتال با بهترین قیمت
           </p>
         </motion.div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {products.slice(0, 8).map((product, index) => (
-            <motion.article
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="group cursor-pointer"
-              role="article"
-              aria-label={`محصول ${product.title}`}
+        {/* Products Horizontal Scroll Container */}
+        <div className="relative">
+          {/* Scroll Buttons - Top */}
+          <div className="flex justify-end gap-3 mb-6">
+            <motion.button
+              onClick={scrollRight}
+              className="w-12 h-12 bg-white/80 backdrop-blur-sm border border-neutral-200/50 rounded-xl flex items-center justify-center hover:bg-white hover:border-primary-400 hover:shadow-lg transition-all duration-300 shadow-md"
+              aria-label="Scroll right"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {/* Product Card */}
-              <div 
-                className={`relative bg-gradient-to-br ${product.gradient} rounded-xl p-4 sm:p-5 md:p-6 lg:p-8 min-h-[180px] sm:min-h-[200px] md:min-h-[220px] lg:min-h-[240px] flex flex-col justify-between overflow-hidden shadow-md hover:shadow-xl transition-all duration-300`}
-                role="button"
-                tabIndex={0}
-                aria-label={`مشاهده جزئیات ${product.title}`}
-              >
-                {/* Decorative Sparkles (for premium products) */}
-                {(product.id === '2' || product.id === '8') && (
-                  <div className="absolute inset-0 opacity-20">
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white rounded-full"
-                        style={{
-                          top: `${20 + i * 15}%`,
-                          left: `${10 + i * 12}%`,
-                        }}
-                        animate={{
-                          opacity: [0.3, 1, 0.3],
-                          scale: [1, 1.5, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.3,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-                
-                {/* Special AI glow effect for product 8 */}
-                {product.id === '8' && (
-                  <motion.div
-                    className="absolute inset-0 opacity-30"
-                    animate={{
-                      background: [
-                        'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                        'radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                        'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                      ],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                  />
-                )}
+              <HiChevronRight className="w-6 h-6 text-primary-600" />
+            </motion.button>
+            <motion.button
+              onClick={scrollLeft}
+              className="w-12 h-12 bg-white/80 backdrop-blur-sm border border-neutral-200/50 rounded-xl flex items-center justify-center hover:bg-white hover:border-primary-400 hover:shadow-lg transition-all duration-300 shadow-md"
+              aria-label="Scroll left"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <HiChevronLeft className="w-6 h-6 text-primary-600" />
+            </motion.button>
+          </div>
 
-                {/* Content */}
-                <div className="relative z-10 flex items-center justify-between h-full gap-3 sm:gap-4">
-                  {/* Persian Text */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-white text-base sm:text-lg md:text-xl font-bold mb-1 leading-tight break-words">
-                      {product.title}
-                    </h3>
-                    {product.titleEn && (
-                      <p className="text-white/80 text-xs sm:text-sm font-medium break-words">
-                        {product.titleEn}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Product Image/Logo */}
-                  <div className="ml-2 sm:ml-4 flex-shrink-0 relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28">
-                    <ProductImage 
-                      src={product.image} 
-                      alt={product.title}
-                      fallbackText={product.titleEn || product.title}
-                      productId={product.id}
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto pb-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 scrollbar-hide"
+          >
+            <div className="flex gap-6 min-w-max">
+              {products.slice(0, 8).map((product, index) => (
+                <motion.article
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="group cursor-pointer flex-shrink-0 w-[280px]"
+                  role="article"
+                  aria-label={`محصول ${product.title}`}
+                >
+                  {/* Product Card */}
+                  <div 
+                    className={`relative bg-white rounded-2xl p-8 h-[360px] flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-neutral-200`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`مشاهده جزئیات ${product.title}`}
+                  >
+                    {/* Gradient Background Overlay */}
+                    <motion.div
+                      className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-10 group-hover:opacity-15 transition-opacity duration-500`}
+                      initial={false}
                     />
-                  </div>
-                </div>
-              </div>
+                    
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
-              {/* Description Below Card */}
-              <div className="mt-4 text-center">
-                <p className="text-sm sm:text-base text-neutral-700 font-medium mb-2">
-                  {product.description}
-                </p>
+                    {/* Content */}
+                    <div className="relative z-10 flex flex-col h-full">
+                      {/* Product Image/Logo - Top */}
+                      <div className="mb-8 flex justify-center">
+                        <motion.div 
+                          className="relative w-36 h-36 aspect-square"
+                          whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 0] }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <div className="absolute inset-0 bg-primary-50 rounded-2xl blur-xl group-hover:bg-primary-100 transition-colors duration-500" />
+                          <div className="relative w-full h-full bg-neutral-50 rounded-2xl border border-neutral-200 p-3 group-hover:bg-neutral-100 group-hover:border-primary-300 transition-all duration-500">
+                            <ProductImage 
+                              src={product.image} 
+                              alt={product.title}
+                              fallbackText={product.titleEn || product.title}
+                              productId={product.id}
+                            />
+                          </div>
+                        </motion.div>
+                      </div>
 
-                {/* Flags or Badges */}
-                {(product.flags || product.badges) && (
-                  <div className="flex items-center justify-center gap-2 flex-wrap">
-                    {product.flags?.map((flag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-lg sm:text-xl"
-                        role="img"
-                        aria-label="flag"
+                      {/* Text Content */}
+                      <div className="flex-1 flex flex-col justify-center text-center space-y-3">
+                        <motion.h3 
+                          className="text-black text-2xl font-bold leading-tight"
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          {product.title}
+                        </motion.h3>
+                        {product.titleEn && (
+                          <motion.p 
+                            className="text-neutral-700 text-sm font-semibold tracking-wide"
+                            initial={{ opacity: 0.8 }}
+                            whileHover={{ opacity: 1 }}
+                          >
+                            {product.titleEn}
+                          </motion.p>
+                        )}
+                      </div>
+
+                      {/* Modern Badge/Indicator */}
+                      <motion.div
+                        className="mt-6 flex justify-center"
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
                       >
-                        {flag}
-                      </span>
-                    ))}
-                    {product.badges?.map((badge, idx) => (
-                      <span
-                        key={idx}
-                        className="text-base sm:text-lg"
-                        role="img"
-                        aria-label="badge"
-                      >
-                        {badge}
-                      </span>
-                    ))}
+                        <div className="px-4 py-2 bg-primary-50 rounded-full border border-primary-200 group-hover:bg-primary-100 group-hover:border-primary-300 transition-all duration-500">
+                          <span className="text-black text-xs font-medium">مشاهده جزئیات</span>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
-                )}
-              </div>
-            </motion.article>
-          ))}
+
+                  {/* Description Below Card */}
+                  <motion.div 
+                    className="mt-5 text-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <p className="text-sm text-black font-semibold">
+                      {product.description}
+                    </p>
+                  </motion.div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+
+          {/* Scroll Indicator - Bottom */}
+          <div className="flex justify-center gap-2 mt-8">
+            <div className="flex gap-2 items-center">
+              {products.slice(0, 8).map((_, index) => (
+                <motion.div
+                  key={index}
+                  className="w-2 h-2 rounded-full bg-neutral-300 hover:bg-primary-400 transition-colors cursor-pointer"
+                  whileHover={{ scale: 1.3 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
     </section>

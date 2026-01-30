@@ -8,7 +8,7 @@ import { services } from '@/data/services'
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-16 sm:py-20 md:py-24 bg-neutral-50">
+    <section id="services" className="py-20 sm:py-24 md:py-32 bg-neutral-50/50">
       <Container>
         {/* Section Header */}
         <motion.div
@@ -16,28 +16,28 @@ const Services: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-16 sm:mb-20"
         >
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-block mb-4"
+            className="inline-block mb-6"
           >
-            <div className="w-16 h-1 bg-primary-600 rounded-full mx-auto" />
+            <div className="w-20 h-1 bg-primary-600 rounded-full mx-auto" />
           </motion.div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
             خدمات ما
           </h2>
-          <p className="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             مجموعه‌ای کامل از راهکارهای پرداخت الکترونیک و خدمات مالی
             برای پاسخگویی به تمامی نیازهای کسب‌وکار شما
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => (
             <ServiceCard
               key={service.id}

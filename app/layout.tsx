@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Vazir } from './fonts'
+import { VazirmatnFont } from './fonts'
 import './globals.css'
 import { getOrganizationSchema, getWebSiteSchema } from '@/lib/structured-data'
 
@@ -62,7 +62,7 @@ export default function RootLayout({
   const websiteSchema = getWebSiteSchema()
 
   return (
-    <html lang="fa" dir="rtl" className={Vazir.variable}>
+    <html lang="fa" dir="rtl" className={VazirmatnFont.variable}>
       <head>
         {/* Viewport and PWA Meta Tags */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />

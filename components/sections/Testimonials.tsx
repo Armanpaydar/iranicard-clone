@@ -10,7 +10,7 @@ import { testimonials } from '@/data/testimonials'
 const Testimonials: React.FC = () => {
   const renderTestimonial = (testimonial: typeof testimonials[0]) => (
     <motion.div
-      className="bg-white p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl shadow-lg border border-neutral-100 relative overflow-hidden"
+      className="bg-white p-8 sm:p-10 md:p-12 rounded-2xl shadow-lg border border-neutral-200/80 relative overflow-hidden"
       whileHover={{ y: -4, shadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
       transition={{ duration: 0.2 }}
     >
@@ -56,7 +56,7 @@ const Testimonials: React.FC = () => {
   )
 
   return (
-    <section id="testimonials" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative overflow-hidden">
+    <section id="testimonials" className="py-20 sm:py-24 md:py-32 bg-gradient-to-br from-white via-primary-50/30 to-secondary-50/20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 right-20 w-64 h-64 bg-primary-400 rounded-full blur-3xl" />
@@ -69,21 +69,21 @@ const Testimonials: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-16 sm:mb-20"
         >
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-block mb-4"
+            className="inline-block mb-6"
           >
-            <div className="w-16 h-1 bg-primary-600 rounded-full mx-auto" />
+            <div className="w-20 h-1 bg-primary-600 rounded-full mx-auto" />
           </motion.div>
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 mb-6 leading-tight">
             نظرات مشتریان
           </h2>
-          <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             تجربه واقعی مشتریان ما از استفاده از خدمات ایرانی کارت
           </p>
         </motion.div>
